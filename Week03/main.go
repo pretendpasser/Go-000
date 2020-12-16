@@ -29,8 +29,9 @@ func StartServer(addr string, ctx context.Context) error {
 }
 
 func CatchSignal(ctx context.Context) error {
+	exitSignals := []os.Signal{os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT} 
 	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGINT, syscall.SIGQUIT)
+	signal.Notify(c, exitSignals...)
 	for {
 		select {
 		case <-ctx.Done():
