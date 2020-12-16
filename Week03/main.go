@@ -30,7 +30,7 @@ func StartServer(addr string, ctx context.Context) error {
 
 func CatchSignal(ctx context.Context) error {
 	exitSignals := []os.Signal{os.Interrupt, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT} 
-	c := make(chan os.Signal, 1)
+	c := make(chan os.Signal, len(exitSignals))
 	signal.Notify(c, exitSignals...)
 	for {
 		select {
